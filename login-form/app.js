@@ -1,6 +1,6 @@
 document.querySelector("#form-control").addEventListener("submit", (e) => {
   e.preventDefault();
-  let username = document.querySelector("#uName").value;
+  let username = document.querySelector("#uName").value.toLowerCase();
   let eMail = document.querySelector("#eMail").value;
   let password = document.querySelector("#passwd").value;
   let ConfirmPassword = document.querySelector("#confirmPwd").value;
@@ -10,14 +10,13 @@ document.querySelector("#form-control").addEventListener("submit", (e) => {
   let pswSpan = document.querySelector(".psw-span");
   let cPswSpan = document.querySelector(".cPsw-span");
 
-  let submit;
+  let submit = true;
 
   if (username == "") {
     uNSpan.innerText = "*Username Is Required!";
     submit = false;
   } else {
     uNSpan.innerText = "";
-    submit = true;
   }
 
   if (eMail == "") {
@@ -25,7 +24,6 @@ document.querySelector("#form-control").addEventListener("submit", (e) => {
     submit = false;
   } else {
     eMSpan.innerText = "";
-    submit = true;
   }
 
   if (password == "") {
@@ -33,19 +31,24 @@ document.querySelector("#form-control").addEventListener("submit", (e) => {
     submit = false;
   } else {
     pswSpan.innerText = "";
-    submit = true;
   }
 
   if (ConfirmPassword == "") {
     cPswSpan.innerText = "* Confirm Password is Required!";
+    submit = false;
   } else if (ConfirmPassword !== password) {
     cPswSpan.innerText = "* Password Does Not Match!";
     submit = false;
   } else {
     cPswSpan.innerText = "";
-    submit = true;
   }
+
   if (submit) {
     alert(`Welcome ${username} Login SucessFul`);
+    console.log(username);
+    document.querySelector("#uName").value = "";
+    document.querySelector("#eMail").value = "";
+    document.querySelector("#passwd").value = "";
+    document.querySelector("#confirmPwd").value = "";
   }
 });
