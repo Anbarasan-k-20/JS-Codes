@@ -1,41 +1,32 @@
-// let inputBox = document.querySelector("#input-box");
-// let lists = document.querySelector(".list-items");
-// function handleClick() {
-//   if (inputBox.value == "") return;
-//   let createdLi = document.createElement("li");
-//   createdLi.innerHTML = inputBox.value;
-//   lists.appendChild(createdLi);
-//   inputBox.value = "";
-//   // console.log(createdLi);
-// }
-// // important use case
-// function removeList() {
-//   let Lists = document.querySelectorAll("li");
-//   Lists.forEach((element) => {
-//     element.remove();
-//   });
-// }
-// //
-// event handeling
-
-let input = document.querySelector("input");
+let inputVal = document.querySelector("#input-box");
 let btn = document.querySelector(".btn");
 let list = document.querySelector(".list-items");
 let deleteItem = document.querySelector(".delete-item");
+let delInfo = document.querySelector(".del-msg");
 
-document.querySelector("form").addEventListener("click", (e) => {
+let form = document.querySelector("#formEl").addEventListener("submit", (e) => {
   e.preventDefault();
-});
-btn.addEventListener("click", () => {
-  if (input.value == "") return;
-  let listItem = document.createElement("li");
-  listItem.innerHTML = input.value;
-  list.append(listItem);
-  input.value = "";
+  if (inputVal.value == "") {
+    alert("Enter a task!");
+    return;
+  }
+  let createLi = document.createElement("li");
+  createLi.innerHTML = inputVal.value;
+  list.appendChild(createLi);
+  inputVal.value = "";
+
+  delInfo.style.display = "block";
+  // let clearTap = document.createElement("p");
+  // clearTap.className = "delete-list";
+  // clearTap.innerHTML = "Delete List";
+  // console.log(clearTap);
+
+  // list.lastChild.appendChild(clearTap);
 });
 
-function removeEl() {
-  let allLi = document.querySelector("li");
-  if (allLi == null) return;
-  allLi.remove();
-}
+list.addEventListener("click", (e) => {
+  e.target.remove();
+});
+document.querySelector(".clear-btn").addEventListener("click", () => {
+  list.innerHTML = "";
+});

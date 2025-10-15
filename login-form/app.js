@@ -44,11 +44,11 @@ document.querySelector("#form-control").addEventListener("submit", (e) => {
   }
 
   if (submit) {
-    alert(`Welcome ${username} Login SucessFul`);
-    console.log(username);
     document.querySelector("#uName").value = "";
     document.querySelector("#eMail").value = "";
     document.querySelector("#passwd").value = "";
     document.querySelector("#confirmPwd").value = "";
+    alert(`Welcome ${username} Login SucessFul`);
+    console.log(username);
   }
 });
