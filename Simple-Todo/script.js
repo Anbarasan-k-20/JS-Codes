@@ -10,27 +10,30 @@ let form = document.querySelector("#formEl").addEventListener("submit", (e) => {
     alert("Enter a task!");
     return;
   }
-  addLocalStorage(inputVal.value);
+  addLocalStorage(inputVal.value); // lS
   let createLi = document.createElement("li");
   createLi.className = "list-d-li";
   createLi.innerHTML = inputVal.value;
   let delIcon = document.createElement("p");
   delIcon.innerText = "Delete";
   delIcon.className = "delIcon";
+  createLi.appendChild(delIcon);
   list.appendChild(createLi);
   inputVal.value = "";
-  createLi.appendChild(delIcon);
 });
 
 // add event listner for remove
 list.addEventListener("click", (e) => {
+  // console.log(e.target.parentElement);
+  e.target.parentElement.remove();
   if (e.target.parentElement.className == "list-d-li") {
-    e.target.parentElement.remove();
+    e.target.parentElement.remove(); //evnt.target == Event delgation
     removeLSli(e.target.parentElement);
   }
 });
 //add event listner for clear all
 document.querySelector(".clear-btn").addEventListener("click", () => {
+  localStorage.clear("taskId");
   list.innerHTML = "";
 });
 
@@ -71,7 +74,7 @@ function showTask() {
 }
 
 function removeLSli(LsRemoveLi) {
-  console.log(LsRemoveLi.firstChild);
+  // console.log(LsRemoveLi.firstChild);
 
   let setTask;
   if (localStorage.getItem("taskId") === null) {
@@ -79,11 +82,23 @@ function removeLSli(LsRemoveLi) {
   } else {
     setTask = JSON.parse(localStorage.getItem("taskId"));
   }
-  setTask.forEach((listEl, index) => {
-    if (listEl == LsRemoveLi.firstChild) {
-      console.log("Matched and removing:", listEl);
-      setTask.splice(index, 1);
-    }
-    localStorage.setItem("taskId", JSON.stringify(setTask));
-  });
+
+  // setTask.forEach((listEl, index) => {
+  //   console.log(`index${index} : ${listEl}`);
+  //   if (listEl !== LsRemoveLi.firstChild) {
+  //     console.log("Matched and removing:", listEl);
+  //     setTask.splice(index, 0);
+  //   }
+  //   localStorage.setItem("taskId", JSON.stringify(setTask));
+  // });
+
+  // Get the text content of the li (excluding the Delete text)
+  let liText = LsRemoveLi.childNodes[0].nodeValue.trim();
+  // console.log(LsRemoveLi.childElement);
+
+  // Filter out the deleted task
+  setTask = setTask.filter((task) => task !== liText);
+
+  // Update local storage
+  localStorage.setItem("taskId", JSON.stringify(setTask));
 }
